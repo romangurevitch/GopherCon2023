@@ -39,7 +39,7 @@ jobs:
       - name: Benchmark
         run: make bench
 
-  test-basic-challenges:
+  fixme-challenges:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -57,10 +57,16 @@ jobs:
           path: ~/go/pkg/mod
           key: ${{ needs.build.outputs.cache-key }}
 
-      - name: Run basic tests
-        run: make test-basic
+      - name: Run basic fix me tests
+        run: make fixme-basic
 
-  test-intermediate-challenges:
+      - name: Run intermediate fix me tests
+        run: make fixme-intermediate
+
+      - name: Run advanced fix me tests
+        run: make fixme-advanced
+
+  implme-challenges:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -78,26 +84,11 @@ jobs:
           path: ~/go/pkg/mod
           key: ${{ needs.build.outputs.cache-key }}
 
-      - name: Run intermediate tests
-        run: make test-intermediate
+      - name: Run intermediate implement me tests
+        run: make implme-basic
 
-  test-advanced-challenges:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+      - name: Run intermediate implement me tests
+        run: make implme-intermediate
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.21.x'
-
-      - name: Retrieve cached modules
-        uses: actions/cache@v3
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ needs.build.outputs.cache-key }}
-
-      - name: Run advanced tests
-        run: make test-advanced
+      - name: Run intermediate implement me tests
+        run: make implme-advanced
