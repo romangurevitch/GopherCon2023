@@ -7,8 +7,10 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-modules.outputs.key }}
 
     steps:
       - name: Set up Go
@@ -20,6 +22,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache Go modules
+        id: cache-modules
         uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
@@ -30,17 +33,68 @@ jobs:
       - name: Load Cached Go modules
         run: go mod download
 
-      - name: Run tests
-        run: make test
+      - name: Build
+        run: make build
+
+  test-basic-challenges:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
 
       - name: Run basic tests
         run: make test-basic
 
+  test-intermediate-challenges:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
       - name: Run intermediate tests
         run: make test-intermediate
 
+  test-advanced-challenges:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
       - name: Run advanced tests
         run: make test-advanced
-
-      - name: Benchmark
-        run: make bench
