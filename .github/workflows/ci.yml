@@ -36,6 +36,24 @@ jobs:
       - name: Test
         run: make test
 
+  benchmarks:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
       - name: Benchmark
         run: make bench
 
