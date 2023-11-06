@@ -1,0 +1,114 @@
+name: Go Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # This will trigger the workflow for pull requests to all branches
+    branches:
+      - '**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-modules.outputs.key }}
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Cache Go modules
+        id: cache-modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Load Cached Go modules
+        run: go mod download
+
+      - name: Test
+        run: make test
+
+  benchmarks:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
+      - name: Benchmark
+        run: make bench
+
+  fixme-challenges:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
+      - name: Run basic fix me tests
+        run: make fixme-basic
+
+      - name: Run intermediate fix me tests
+        run: make fixme-intermediate
+
+      - name: Run advanced fix me tests
+        run: make fixme-advanced
+
+  implme-challenges:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Retrieve cached modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ needs.build.outputs.cache-key }}
+
+      - name: Run basic implement me tests
+        run: make implme-basic
+
+      - name: Run intermediate implement me tests
+        run: make implme-intermediate
+
+      - name: Run advanced implement me tests
+        run: make implme-advanced

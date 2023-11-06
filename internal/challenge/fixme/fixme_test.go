@@ -94,16 +94,14 @@ func TestIntermediateUnbufferedNotifyChannel(t *testing.T) {
 	signal.Notify(sigCh, syscall.SIGINT)
 
 	go func() {
-		time.Sleep(10 * time.Millisecond)
 		// Simulate sending a SIGINT to our own process
 		if err := syscall.Kill(syscall.Getpid(), syscall.SIGINT); err != nil {
 			require.NoError(t, err, "failed to send SIGINT")
 		}
 	}()
 
-	select {
-	case <-sigCh:
-	}
+	time.Sleep(10 * time.Millisecond)
+	<-sigCh
 }
 
 func TestIntermediateDeadlock(t *testing.T) {

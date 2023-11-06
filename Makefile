@@ -41,19 +41,34 @@ test:
 	@$(GOTEST) ./internal/pattern/...
 
 # Test Targets for different components
-test-basic:
+fixme-basic:
 	@echo "Running basic tests..."
 	@$(GOTEST) -v -run=^TestBasic ./internal/challenge/fixme/...
 
 # Test Targets for different components
-test-intermediate:
+fixme-intermediate:
 	@echo "Running intermediate tests..."
 	@$(GOTEST) -v -run=^TestIntermediate ./internal/challenge/fixme/...
 
 # Test Targets for different components
-test-advanced:
+fixme-advanced:
 	@echo "Running advanced tests..."
 	@$(GOTEST) -v -run=^TestAdvanced ./internal/challenge/fixme/...
+
+# Test Targets for different components
+implme-basic:
+	@echo "Running basic tests..."
+	@$(GOTEST) -v ./internal/challenge/implme/basic...
+
+# Test Targets for different components
+implme-intermediate:
+	@echo "Running intermediate tests..."
+	@$(GOTEST) -v ./internal/challenge/implme/intermediate...
+
+# Test Targets for different components
+implme-advanced:
+	@echo "Running advanced tests..."
+	@$(GOTEST) -v ./internal/challenge/implme/advanced...
 
 # Benchmark Targets for different components
 bench:
@@ -66,11 +81,6 @@ bench:
 lint: $(GOLANGCI_LINT_VERSIONED)
 	@echo "Linting the code..."
 	@$(GOLINT)
-
-# Formatting
-fmt:
-	@echo "Formatting the code..."
-	@$(GOFMT) -w $(shell grep -L -e '^// Code generated' $(GOFILES))
 
 # Go mod tidy
 tidy:

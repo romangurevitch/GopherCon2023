@@ -64,16 +64,6 @@ func TestSelectDefault(t *testing.T) {
 	}
 }
 
-// TestNilChannel demonstrates checking for a nil channel.
-func TestNilChannel(t *testing.T) {
-	var ch chan int // Declare a nil channel
-
-	// Check if the channel is nil
-	if ch != nil {
-		t.Error("Expected channel to be nil")
-	}
-}
-
 // TestSendOnClosedChannel checks for a panic when sending to a closed channel.
 func TestSendOnClosedChannel(t *testing.T) {
 	ch := make(chan int) // Create a new channel

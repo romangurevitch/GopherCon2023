@@ -50,6 +50,7 @@ func TestGoexitWithoutDefer(t *testing.T) {
 		// No defer to call wg.Done, this will cause a deadlock
 		fmt.Println("About to exit goroutine")
 		runtime.Goexit()
+		wg.Done()
 	}()
 
 	wg.Wait() // This will deadlock
