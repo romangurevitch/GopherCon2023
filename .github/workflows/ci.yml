@@ -84,11 +84,11 @@ jobs:
           path: ~/go/pkg/mod
           key: ${{ needs.build.outputs.cache-key }}
 
-      - name: Run intermediate implement me tests
+      - name: Run basic implement me tests
         run: make implme-basic
 
       - name: Run intermediate implement me tests
         run: make implme-intermediate
 
-      - name: Run intermediate implement me tests
+      - name: Run advanced implement me tests
         run: make implme-advanced
