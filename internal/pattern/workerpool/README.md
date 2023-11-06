@@ -4,7 +4,7 @@ Worker Pools are a design pattern in Go that allow you to efficiently manage and
 multiple tasks in parallel, effectively controlling the level of concurrency. They can be especially useful in scenarios
 where spawning a new goroutine for every task can lead to high memory usage and scheduler overhead.
 
-<img src="../../../docs/images/gopher_pool.png" alt="drawing" width="400"/>
+<img src="../../../docs/images/gopher_pool.png" alt="drawing" height="400"/>
 
 
 ## Table of Contents

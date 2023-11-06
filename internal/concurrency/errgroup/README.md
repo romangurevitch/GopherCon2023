@@ -1,8 +1,9 @@
 # Understanding Go's `errgroup` Package: Group
 
-The `errgroup` package in Go provides a straightforward way to manage the lifecycle of a group of goroutines, and their associated error handling.
+The `errgroup` package in Go provides a straightforward way to manage the lifecycle of a group of goroutines, and their
+associated error handling.
 
-![Go Errgroup](https://cdn.dribbble.com/users/1778913/screenshots/6562748/dribbble-machucado1.jpg?resize=400x300&vertical=center)
+<img src="https://cdn.dribbble.com/users/1778913/screenshots/6562748/dribbble-machucado1.jpg?resize=400x300&vertical=center" alt="drawing" height="400"/>
 
 ## Table of Contents
 
@@ -15,7 +16,8 @@ The `errgroup` package in Go provides a straightforward way to manage the lifecy
 
 ## Introduction to Group
 
-The `errgroup.Group` type provides synchronization, error propagation, and Context cancelation for groups of goroutines working on sub-tasks of a common task.
+The `errgroup.Group` type provides synchronization, error propagation, and Context cancelation for groups of goroutines
+working on sub-tasks of a common task.
 
 ## Usage of Group
 
@@ -39,7 +41,9 @@ err := g.Wait()
 ## Common Pitfalls
 
 - **Error Ignorance**: Ignoring errors returned by `Group.Go`.
-- **Misusing Context**: Misusing the context returned by `errgroup.WithContext` can lead to unintended behavior. For instance, storing values in the context that are supposed to be accessed by goroutines may lead to race conditions if not handled properly.
+- **Misusing Context**: Misusing the context returned by `errgroup.WithContext` can lead to unintended behavior. For
+  instance, storing values in the context that are supposed to be accessed by goroutines may lead to race conditions if
+  not handled properly.
 
 ## Best Practices
 

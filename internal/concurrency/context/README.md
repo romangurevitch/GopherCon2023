@@ -2,7 +2,7 @@
 
 The `context` package in Go provides essential functionality for passing deadlines, cancelation signals, and other request-scoped values across API boundaries and between processes.
 
-![Go Context](https://miro.medium.com/v2/resize:fit:946/1*fSq3uLTcwVUvZQWXyTgRTQ.png)
+<img src="https://miro.medium.com/v2/resize:fit:946/1*fSq3uLTcwVUvZQWXyTgRTQ.png" alt="drawing" height="400"/>
 
 ## Table of Contents
 

@@ -1,8 +1,9 @@
 # Understanding Go's `runtime` Package: Gosched
 
-The `runtime` package in Go provides the `Gosched` function, yielding the processor to allow other goroutines to execute.
+The `runtime` package in Go provides the `Gosched` function, yielding the processor to allow other goroutines to
+execute.
 
-![Go Runtime Gosched](https://crl2020.imgix.net/img/go-blog-01.png?auto=format,compress&q=60&w=1185)
+<img src="https://crl2020.imgix.net/img/go-blog-01.png?auto=format,compress&q=60&w=1185" alt="drawing" height="400"/>
 
 ## Table of Contents
 

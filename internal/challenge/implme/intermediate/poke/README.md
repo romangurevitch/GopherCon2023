@@ -14,7 +14,7 @@ The Pokémon Challenge invites participants to enhance the responsiveness of a P
 intermediate-level asynchronous method, `OnChangeNonBlocking`. This method is essential for fetching data from the
 PokéAPI without causing UI freezes or delays.
 
-![PokéAPI logo](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
+<img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png" alt="drawing" height="150"/>
 
 ## Challenge Description
 

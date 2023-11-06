@@ -3,7 +3,7 @@
 The Publish/Subscribe (Pub/Sub) pattern is a messaging pattern where senders (publishers) send messages without the
 program needing to specify the recipients (subscribers). The pattern is widely used to build event-driven architectures.
 
-<img src="../../../docs/images/mail.png" alt="drawing" width="600"/>
+<img src="../../../docs/images/mail.png" alt="drawing" height="400"/>
 
 ## Table of Contents
 
