@@ -30,11 +30,13 @@ func TestBasicAtomic(t *testing.T) {
 
 // TestBadUsageAtomic demonstrates a bad usage of atomic.Int64.
 func TestBadUsageAtomic(t *testing.T) {
+	t.Skip("Comment out to demonstrate incorrect usage")
 	var counter atomic.Int64
 	wg := sync.WaitGroup{}
 
 	// Incorrect: Updating the counter without atomic operations
-	for i := 0; i < 10000; i++ {
+	iterations := 10000
+	for i := 0; i < iterations; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -43,8 +45,8 @@ func TestBadUsageAtomic(t *testing.T) {
 	}
 
 	wg.Wait()
-	if counter.Load() == 10000 {
-		t.Errorf("Expected race condition that results in less than 1000, got %v", counter.Load())
+	if counter.Load() == int64(iterations) {
+		t.Errorf("Expected race condition that results in less than %d, got %v", iterations, counter.Load())
 	}
 }
 
