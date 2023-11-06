@@ -33,8 +33,11 @@ jobs:
       - name: Load Cached Go modules
         run: go mod download
 
-      - name: Build
-        run: make build
+      - name: Test
+        run: make test
+
+      - name: Benchmark
+        run: make bench
 
   test-basic-challenges:
     needs: test
