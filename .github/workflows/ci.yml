@@ -30,10 +30,14 @@ jobs:
       - name: Load Cached Go modules
         run: go mod download
 
+      - name: Golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.55.1
+
       - name: Build, Test and Other Commands
         run: |
           make build
-          make lint
           make test
           make test-basic
           make test-intermediate
