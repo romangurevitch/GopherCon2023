@@ -60,6 +60,7 @@ jobs:
         run: make bench
 
   fixme-challenges:
+    if: ${{ github.ref != 'refs/heads/main' }}
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -87,6 +88,7 @@ jobs:
         run: make fixme-advanced
 
   implme-challenges:
+    if: ${{ github.ref != 'refs/heads/main' }}
     needs: test
     runs-on: ubuntu-latest
     steps:
