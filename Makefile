@@ -59,6 +59,9 @@ fixme-advanced:
 implme-basic:
 	@echo "Running basic tests..."
 	@$(GOTEST) -v ./internal/challenge/implme/basic...
+	@echo "Running basic benchmarks..."
+	@$(GOBENCH) ./internal/challenge/implme/basic...
+
 
 # Test Targets for different components
 implme-intermediate:
