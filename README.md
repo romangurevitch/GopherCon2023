@@ -62,9 +62,9 @@ Basic experience with command-line tools is required.
     - Once you have your preferred IDE installed, open the project by navigating to `File -> Open...` and selecting the
       project directory you cloned earlier.
 
-## Concurrency Fundamentals
+## Concurrency Building Blocks in Go
 
-Dive into the basics of concurrency in Go by exploring the following topics:
+Dive into the building blocks of concurrency in Go by exploring the following topics:
 
 - [Channels](internal/concurrency/channel/README.md)
 - [Context](internal/concurrency/context/README.md)

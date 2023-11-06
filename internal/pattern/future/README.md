@@ -4,7 +4,7 @@ The Future design pattern is a software design pattern used to represent a resul
 the future. It is particularly useful in scenarios where computations or tasks are executed asynchronously. In Go, this
 pattern can be implemented using channels and goroutines.
 
-![Future Design Pattern](https://some-image-link.com/future-pattern-diagram)
+<img src="https://miro.medium.com/v2/resize:fit:1400/1*_n28Xl6B7fdijFdn9KIzdA.png" alt="drawing" height="400"/>
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ The Future Pattern is a design pattern that helps in handling potentially blocki
 separate goroutines and allowing the calling code to access the result once it's ready. This pattern allows for
 concurrent execution of tasks and can significantly improve the performance of I/O-bound and CPU-bound programs.
 
-<img src="../../../docs/images/future_graph.png" alt="drawing" width="600"/>
+<img src="../../../docs/images/future_graph.png" alt="drawing" height="300"/>
 
 ## Use Cases
 

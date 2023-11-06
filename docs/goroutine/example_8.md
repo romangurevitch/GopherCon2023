@@ -56,7 +56,7 @@ func NonStoppingGoRoutineContext(ctx context.Context) (int, bool) {
   <tr>
     <td>Correct result?</td>
     <td><img height="40" src="../images/question.svg" width="40" alt="?"/></td>
-    <td rowspan="3"><img height="320" src="https://media.giphy.com/media/XEaxdA1mObxm40bnpM/giphy.gif" width="320" alt="?"/></td>
+    <td rowspan="3"><img height="320" src="https://media.giphy.com/media/f3txRVhVh0MOO5vZkB/giphy.gif" alt="?"/></td>
   </tr> 
   <tr>
     <td>No race conditions?</td>

@@ -3,7 +3,7 @@
 The Pipeline pattern is instrumental in setting up a series of processing elements, arranged so that the output of each
 element is the input of the next. In Golang, this pattern is implemented using channels and goroutines.
 
-<img src="../../../docs/images/pipeline.png" alt="drawing" width="500"/>
+<img src="../../../docs/images/pipeline.png" alt="drawing" height="400"/>
 
 ## Table of Contents
 

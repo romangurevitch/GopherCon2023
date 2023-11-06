@@ -3,7 +3,7 @@
 The `sync` package in Go provides the `Pool` type, facilitating the reuse of objects to enhance performance and reduce GC pressure.
 
 
-<img src="../../../../docs/images/gopher_pool.png" alt="drawing" width="400"/>
+<img src="../../../../docs/images/gopher_pool.png" alt="drawing" height="400"/>
 
 
 

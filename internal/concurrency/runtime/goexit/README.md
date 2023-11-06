@@ -2,7 +2,7 @@
 
 The `runtime` package in Go provides the `Goexit` function, which terminates the current goroutine.
 
-![Go Runtime Goexit](https://miro.medium.com/v2/resize:fit:740/1*hUmGVxYLmRnosaWD-mZzEQ.png)
+<img src="https://miro.medium.com/v2/resize:fit:740/1*hUmGVxYLmRnosaWD-mZzEQ.png" alt="drawing" height="300"/>
 
 ## Table of Contents
 
