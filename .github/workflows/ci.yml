@@ -12,15 +12,15 @@ jobs:
 
     steps:
       - name: Set up Go
-        uses: actions/setup-go@v3 # Use the latest stable version of setup-go action
+        uses: actions/setup-go@v3
         with:
-          go-version: '1.21.x' # Use the semantic version range of the Go version
+          go-version: '1.21.x'
 
       - name: Check out code
-        uses: actions/checkout@v3 # Use the latest stable version of checkout action
+        uses: actions/checkout@v3
 
       - name: Cache Go modules
-        uses: actions/cache@v3 # Use the latest stable version of cache action
+        uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -30,11 +30,17 @@ jobs:
       - name: Load Cached Go modules
         run: go mod download
 
-      - name: Build, Test and Other Commands
-        run: |
-          make build
-          make test
-          make test-basic
-          make test-intermediate
-          make test-advanced
-          make bench
+      - name: Run tests
+        run: make test
+
+      - name: Run basic tests
+        run: make test-basic
+
+      - name: Run intermediate tests
+        run: make test-intermediate
+
+      - name: Run advanced tests
+        run: make test-advanced
+
+      - name: Benchmark
+        run: make bench
