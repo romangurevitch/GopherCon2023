@@ -4,7 +4,9 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    # This will trigger the workflow for pull requests to all branches
+    branches:
+      - '**'
 
 jobs:
   test:
