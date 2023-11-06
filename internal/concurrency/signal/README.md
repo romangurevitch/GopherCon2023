@@ -4,7 +4,7 @@ In computing, a signal is a software interrupt delivered to a process. The opera
 
 In Go, the `os/signal` package provides a mechanism to receive signals. This can be used to catch and respond to conditions like a user wanting to interrupt a running program (using `Ctrl+C`, for instance).
 
-<img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WRUe5p-pzLyCpU6hLvNVUg.png" alt="drawing" height="400"/>
+<img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WRUe5p-pzLyCpU6hLvNVUg.png" alt="drawing" height="300"/>
 
 ## Table of Contents
 

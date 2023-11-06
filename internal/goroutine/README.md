@@ -39,7 +39,9 @@ During the demo I will ask you 3 questions:
 * [5. Non-stopping go routines](../../docs/goroutine/example_5.md)
 * [6. Let's handle shutdown gracefully?](../../docs/goroutine/example_6.md)
 * [7. Let's handle shutdown gracefully, for real this time!](../../docs/goroutine/example_7.md)
-* [7. Bonus question](../../docs/goroutine/example_7_bonus.md)
+* [8. Adding context](../../docs/goroutine/example_8.md)
+* [9. Notify context on signals](../../docs/goroutine/example_9.md)
+* [8. Bonus: let's make a tiny change](../../docs/goroutine/example_9_bonus.md)
 
 ### Questions?
 
