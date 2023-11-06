@@ -2,7 +2,7 @@
 
 The `sync` package in Go provides the `Map` type, a concurrent-safe map implementation.
 
-![Go Sync Map](link_to_sync_map_image)
+<img src="../../../../docs/images/sync_map.png" alt="drawing" height="400"/>
 
 ## Table of Contents
 
