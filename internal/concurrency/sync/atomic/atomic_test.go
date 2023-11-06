@@ -34,7 +34,7 @@ func TestBadUsageAtomic(t *testing.T) {
 	wg := sync.WaitGroup{}
 
 	// Incorrect: Updating the counter without atomic operations
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 10000; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -43,7 +43,7 @@ func TestBadUsageAtomic(t *testing.T) {
 	}
 
 	wg.Wait()
-	if counter.Load() == 1000 {
+	if counter.Load() == 10000 {
 		t.Errorf("Expected race condition that results in less than 1000, got %v", counter.Load())
 	}
 }
