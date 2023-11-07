@@ -41,7 +41,7 @@ During the demo I will ask you 3 questions:
 * [7. Let's handle shutdown gracefully, for real this time!](../../docs/goroutine/example_7.md)
 * [8. Adding context](../../docs/goroutine/example_8.md)
 * [9. Notify context on signals](../../docs/goroutine/example_9.md)
-* [8. Bonus: let's make a tiny change](../../docs/goroutine/example_9_bonus.md)
+* [10. Bonus: let's make a tiny change](../../docs/goroutine/example_9_bonus.md)
 
 ### Questions?
 

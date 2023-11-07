@@ -1,4 +1,4 @@
-# 9. Bonus: let's make a tiny change
+# 10. Bonus: let's make a tiny change
 
 [Basic counter](counter/basic.md) | [Race detection](race/race.md) | [WaitGroup](../../internal/concurrency/sync/waitgroup/README.md) | [Mutex counter](counter/mutex.md) | [Atomic counter](counter/atomic.md) | [Channels](../../internal/concurrency/channel/README.md) | [Signals](../../internal/concurrency/signal/README.md) | [Context](../../internal/concurrency/context/README.md)
 
