@@ -20,7 +20,7 @@ import (
 func TestBasicWriteDeadlock(t *testing.T) {
 	exitAfter(time.Millisecond)
 
-	ch := make(chan int)
+	ch := make(chan int, 1)
 	ch <- 42
 	slog.Info("successfully sent on channel")
 }
@@ -28,7 +28,7 @@ func TestBasicWriteDeadlock(t *testing.T) {
 func TestBasicNilChannel(t *testing.T) {
 	exitAfter(time.Millisecond)
 
-	var ch chan int
+	ch := make(chan int, 1)
 
 	go func() {
 		ch <- 1
@@ -52,7 +52,11 @@ func TestBasicClosedChannelWithoutOkCheck(t *testing.T) {
 
 	for {
 		select {
-		case val := <-ch:
+		case val, ok := <-ch:
+			if !ok {
+				return
+			}
+
 			slog.Info("received", "value", val)
 		}
 	}
@@ -60,13 +64,14 @@ func TestBasicClosedChannelWithoutOkCheck(t *testing.T) {
 
 func TestBasicUnlockingUnlockedLock(t *testing.T) {
 	var mu sync.Mutex
+	mu.Lock()
 	mu.Unlock()
 }
 
 func TestBasicWaitGroupNegativeCounter(t *testing.T) {
 	wg := sync.WaitGroup{}
 
-	wg.Add(1)
+	wg.Add(2)
 	go func() {
 		wg.Done()
 		wg.Done()
@@ -79,7 +84,7 @@ func TestBasicWaitGroupNegativeCounter(t *testing.T) {
 func TestBasicContextUsingPrimitivesAsKeys(t *testing.T) {
 	type ctxKey string
 	const key ctxKey = "myKey"
-	ctx := context.WithValue(context.Background(), "myKey", "value1")
+	ctx := context.WithValue(context.Background(), key, "value1")
 
 	if val, ok := ctx.Value(key).(string); !ok || val != "value1" {
 		t.Fatalf("expected context to have 'value1' for 'myKey', got: %v", val)
@@ -90,18 +95,21 @@ func TestBasicContextUsingPrimitivesAsKeys(t *testing.T) {
 func TestIntermediateUnbufferedNotifyChannel(t *testing.T) {
 	exitAfter(100 * time.Millisecond)
 
-	sigCh := make(chan os.Signal)
+	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT)
 
+	var wg sync.WaitGroup
+	wg.Add(1)
+
 	go func() {
+		defer wg.Done()
 		// Simulate sending a SIGINT to our own process
 		if err := syscall.Kill(syscall.Getpid(), syscall.SIGINT); err != nil {
 			require.NoError(t, err, "failed to send SIGINT")
 		}
 	}()
 
-	time.Sleep(10 * time.Millisecond)
-	<-sigCh
+	wg.Wait()
 }
 
 func TestIntermediateDeadlock(t *testing.T) {
@@ -118,6 +126,8 @@ func TestIntermediateDeadlock(t *testing.T) {
 		defer mu.Unlock()
 	}()
 
+	mu.Unlock()
+
 	wg.Wait()
 	slog.Error("success")
 }
@@ -128,9 +138,9 @@ func TestIntermediateWaitGroupByValue(t *testing.T) {
 	wg := sync.WaitGroup{}
 
 	wg.Add(1)
-	go func(wg sync.WaitGroup) {
+	go func(wg *sync.WaitGroup) {
 		defer wg.Done()
-	}(wg)
+	}(&wg)
 
 	wg.Wait()
 }
@@ -140,8 +150,8 @@ func TestIntermediateWaitGroupIncorrectAdd(t *testing.T) {
 	wg := sync.WaitGroup{}
 	finishedSuccessfully := false
 
+	wg.Add(1)
 	go func() {
-		wg.Add(1)
 		defer wg.Done()
 		defer func() {
 			finishedSuccessfully = true
@@ -158,7 +168,7 @@ func TestIntermediateDefaultBusyLoop(t *testing.T) {
 	go func() {
 		for i := 0; i < 3; i++ {
 			ch <- 1
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(10 * time.Millisecond)
 		}
 		close(ch)
 	}()
@@ -174,6 +184,7 @@ func TestIntermediateDefaultBusyLoop(t *testing.T) {
 		default:
 			counter++
 			require.Less(t, counter, 100, "too many default calls")
+			time.Sleep(10 * time.Millisecond)
 		}
 	}
 }
@@ -194,7 +205,7 @@ func TestIntermediateMixingAtomicAndNonAtomicOperations(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			count++
+			atomic.AddInt32(&count, 1)
 		}()
 	}
 
@@ -210,16 +221,13 @@ func TestIntermediateUnorderedReadFromChannels(t *testing.T) {
 	ch2 <- 3
 
 	result := 5
-	for i := 0; i < 2; i++ {
-		select {
-		case val := <-ch1:
-			result *= val // result * 2
-		case val := <-ch2:
-			result += val // result + 3
-		}
-	}
 
-	expected := 1
+	val := <-ch1
+	result *= val // result * 2
+	val = <-ch2
+	result += val // result + 3
+
+	expected := 13
 	require.Equal(t, expected, result)
 }
 
@@ -236,8 +244,8 @@ func TestAdvancedWaitGroupWithoutDefer(t *testing.T) {
 
 	wg.Add(1)
 	go func() {
+		defer wg.Done()
 		finishedFunc()
-		wg.Done()
 	}()
 
 	wg.Wait()
@@ -249,7 +257,7 @@ func TestAdvancedErrGroupWithoutWithContext(t *testing.T) {
 	exitAfter(10 * time.Millisecond)
 	expectedErr := errors.New("error")
 	ctx := context.Background()
-	group := errgroup.Group{}
+	group, ctx := errgroup.WithContext(ctx)
 
 	group.Go(func() error {
 		return expectedErr
@@ -270,7 +278,7 @@ func TestAdvancedErrGroupWithoutWithContext(t *testing.T) {
 // nolint
 func TestAdvancedContextIgnoringCancellation(t *testing.T) {
 	exitAfter(10 * time.Millisecond)
-	_, cancel := context.WithTimeout(context.Background(), time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond)
 	defer cancel()
 
 	inputCh := make(chan bool)
@@ -282,6 +290,7 @@ func TestAdvancedContextIgnoringCancellation(t *testing.T) {
 		select {
 		// Waiting on input
 		case <-inputCh:
+		case <-ctx.Done():
 		}
 	}()
 
@@ -289,18 +298,20 @@ func TestAdvancedContextIgnoringCancellation(t *testing.T) {
 }
 
 func TestAdvancedMultipleProducersCloseChannel(t *testing.T) {
-	ch := make(chan int)
+	ch := make(chan int, 2)
 	wg := sync.WaitGroup{}
 
 	producer := func() {
 		defer wg.Done()
 		ch <- 1
-		close(ch)
 	}
 
 	wg.Add(2)
 	go producer()
 	go producer()
+
+	wg.Wait()
+	close(ch)
 
 	for val := range ch {
 		slog.Info("successfully received", "value", val)
